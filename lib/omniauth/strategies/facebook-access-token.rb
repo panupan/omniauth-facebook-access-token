@@ -64,7 +64,11 @@ module OmniAuth
       end
 
       def info_options
-        options[:info_fields] ? {:params => {:fields => options[:info_fields]}} : {}
+        params = {}
+        params.merge!({:fields => (options[:info_fields] || 'name,email')})
+        params.merge!({:locale => options[:locale]}) if options[:locale]
+
+        { :params => params }
       end
 
       def client
